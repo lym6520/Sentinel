@@ -2,6 +2,11 @@
 
 # 修改 sentinel-dashboard
 调整为 zookeeper 注册中心
+配置文件添加配置：
+~~~
+#指定 zk 注册地址（apache-zookeeper-3.7.0）
+sentinel.datasource.zk.address=127.0.0.1:2181
+~~~
 
 
-其他参见 [](https://github.com/alibaba/Sentinel)
+其他参见 [alibaba sentinel](https://github.com/alibaba/Sentinel)
