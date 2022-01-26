@@ -7,8 +7,8 @@
 #指定 zk 注册地址（apache-zookeeper-3.7.0）
 sentinel.datasource.zk.address=127.0.0.1:2181
 ~~~
-2. 菜单栏调整，保留以下支持  zookeeper 注册中心的 限流控制：
-流控规则、熔断规则、授权规则
+2. 菜单栏调整，保留以下支持：
+流控规则、熔断规则、授权规则、系统规则
 
 
 其他参见 [alibaba sentinel](https://github.com/alibaba/Sentinel)
