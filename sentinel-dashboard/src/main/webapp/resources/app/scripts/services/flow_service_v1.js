@@ -49,7 +49,13 @@ app.service('FlowServiceV1', ['$http', function ($http) {
             controlBehavior: rule.controlBehavior,
             warmUpPeriodSec: rule.warmUpPeriodSec,
             maxQueueingTimeMs: rule.maxQueueingTimeMs,
+
+            clusterMode:rule.clusterMode,
+            fallbackToLocalWhenFail:rule.clusterConfig.fallbackToLocalWhenFail,
+            flowId:rule.clusterConfig.flowId,
+            thresholdType:rule.clusterConfig.thresholdType,
         };
+        console.log(rule)
 
         return $http({
             url: '/v1/flow/save.json',
@@ -114,6 +120,7 @@ app.service('FlowServiceV1', ['$http', function ($http) {
             alert('集群限流配置不正确');
             return false;
         }
+        debugger
         return true;
     };
 }]);

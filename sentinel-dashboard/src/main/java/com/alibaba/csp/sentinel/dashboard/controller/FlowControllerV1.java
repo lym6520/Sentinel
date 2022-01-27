@@ -25,6 +25,7 @@ import com.alibaba.csp.sentinel.dashboard.auth.AuthAction;
 import com.alibaba.csp.sentinel.dashboard.auth.AuthService.PrivilegeType;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRuleProvider;
 import com.alibaba.csp.sentinel.dashboard.rule.DynamicRulePublisher;
+import com.alibaba.csp.sentinel.slots.block.flow.ClusterFlowConfig;
 import com.alibaba.csp.sentinel.util.StringUtil;
 
 import com.alibaba.csp.sentinel.dashboard.client.SentinelApiClient;
@@ -180,13 +181,20 @@ public class FlowControllerV1 {
         }
     }
 
+    /*
+     clusterMode:rule.clusterMode,
+            fallbackToLocalWhenFail:rule.clusterConfig.fallbackToLocalWhenFail,
+            flowId:rule.clusterConfig.flowId,
+            thresholdType:rule.clusterConfig.thresholdType,
+     */
     @PutMapping("/save.json")
     @AuthAction(PrivilegeType.WRITE_RULE)
     public Result<FlowRuleEntity> apiUpdateFlowRule(Long id, String app,
                                                   String limitApp, String resource, Integer grade,
                                                   Double count, Integer strategy, String refResource,
                                                   Integer controlBehavior, Integer warmUpPeriodSec,
-                                                  Integer maxQueueingTimeMs) {
+                                                  Integer maxQueueingTimeMs,
+                                                    Boolean clusterMode, Boolean fallbackToLocalWhenFail, Long flowId, Integer thresholdType) {
         if (id == null) {
             return Result.ofFail(-1, "id can't be null");
         }
@@ -242,6 +250,16 @@ public class FlowControllerV1 {
                 entity.setMaxQueueingTimeMs(maxQueueingTimeMs);
             }
         }
+
+        entity.setClusterMode(clusterMode);
+        if(clusterMode){
+            ClusterFlowConfig clusterConfig = new ClusterFlowConfig();
+            clusterConfig.setFlowId(flowId);
+            clusterConfig.setFallbackToLocalWhenFail(fallbackToLocalWhenFail);
+            clusterConfig.setThresholdType(thresholdType);
+            entity.setClusterConfig(clusterConfig);
+        }
+
         Date date = new Date();
         entity.setGmtModified(date);
         try {
