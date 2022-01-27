@@ -8,7 +8,7 @@
 sentinel.datasource.zk.address=127.0.0.1:2181
 ~~~
 2. 菜单栏调整，保留以下支持：
-流控规则、熔断规则、授权规则、系统规则
+流控规则、熔断规则、授权规则、系统规则、机器列表
 
 
 其他参见 [alibaba sentinel](https://github.com/alibaba/Sentinel)
