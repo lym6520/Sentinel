@@ -4,6 +4,29 @@
 
 Sentinel 控制台是流量控制、熔断降级规则统一配置和管理的入口，它为用户提供了机器自发现、簇点链路自发现、监控、规则配置等功能。在 Sentinel 控制台上，我们可以配置规则并实时查看流量控制效果。
 
+```
+-- 创建监控数据表
+CREATE TABLE `sentinel_metric` (
+  `id` INT NOT NULL AUTO_INCREMENT COMMENT 'id，主键',
+  `gmt_create` DATETIME COMMENT '创建时间',
+  `gmt_modified` DATETIME COMMENT '修改时间',
+  `app` VARCHAR(100) COMMENT '应用名称',
+  `timestamp` DATETIME COMMENT '统计时间',
+  `resource` VARCHAR(250) COMMENT '资源名称',
+  `pass_qps` INT COMMENT '通过qps',
+  `success_qps` INT COMMENT '成功qps',
+  `block_qps` INT COMMENT '限流qps',
+  `exception_qps` INT COMMENT '发送异常的次数',
+  `rt` DOUBLE COMMENT '所有successQps的rt的和',
+  `_count` INT COMMENT '本次聚合的总条数',
+  `resource_code` INT COMMENT '资源的hashCode',
+  INDEX app_idx(`app`) USING BTREE,
+  INDEX resource_idx(`resource`) USING BTREE,
+  INDEX timestamp_idx(`timestamp`) USING BTREE,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+```
+
 ## 1. 编译和启动
 
 ### 1.1 如何编译
